@@ -1,0 +1,44 @@
+<div class="header" data-role="header" >
+    <a class="ui-btn ui-btn-b    ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-shadow-icon atras"  data-direction="reverse">Plus</a>
+    <h1> Seleccionar Destino</h1>
+</div>
+<div class="content">
+    
+
+<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" class="select_horizontal">
+        <input type="radio" name="radio-choice-b" id="radio-choice-c" value="list" checked="checked" ref="view1">
+        <label for="radio-choice-c">Estaciones</label>
+        <input type="radio" name="radio-choice-b" id="radio-choice-d" value="grid" ref="view2">
+        <label for="radio-choice-d">Paraderos</label>
+<!--         <input type="radio" name="radio-choice-b" id="radio-choice-e" value="gallery" ref="view3">
+        <label for="radio-choice-e">Mapa</label>
+ --></fieldset>
+    <div class="view1 view" id="destino_rutas1"> 
+        <ul data-role="listview" id="destino_rutas" data-filter="true" data-filter-placeholder="Buscar"> 
+        </ul>
+    </div>
+    <div class="view2  view">
+        <ul data-role="listview" id="paradero_destino" data-filter="true" data-filter-placeholder="Buscar"> 
+
+        </ul>
+    </div> 
+        <div class="view3  view">
+        <ul data-role="listview" id="ul_listado_alimentadores" data-filter="true" data-filter-placeholder="Buscar"> 
+
+            <li><a href="#ruta">>Mapa</a></li>
+
+            <li height="40px"></li>
+        </ul>
+    </div> 
+    <div class="view3  view">
+        <div id="mapa_destino">
+            
+        </div>
+    </div> 
+</div>
+<div data-role="footer" class="footer">
+    <a href="#planifica" class="btn_footer"> <img class="iconsFooter" src="images/iconPlaner.png"></a>    
+    <a href="#listado_rutas"class="btn_footer"> <img class="iconsFooter" src="images/iconRoute.png"></a>
+    <a href="#listado_estaciones" class="btn_footer"> <img class="iconsFooter" src="images/House.png"></a>    
+    <a href="#mapa"class="btn_footer"> <img class="iconsFooter" src="images/iconMap.png"></a>
+</div>

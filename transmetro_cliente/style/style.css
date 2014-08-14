@@ -1,0 +1,239 @@
+
+.ui-footer{
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+
+
+}
+
+
+.footer{
+	text-align:center;
+	width: 100%;
+/*	position: fixed;*/
+	bottom: 0;
+	z-index: 300;
+}
+
+.btn_footer{
+	display: inline-block;
+	width: 3.1em;
+	margin: 0.5em 3%;
+
+	
+	padding: 0;
+	border-radius: 0.3em!important;
+	border: 1px solid #314a9c !important;
+}
+.btn_footer img{
+	width: auto !important; /*override the width below*/
+	width: 100%;
+	max-width: 100%;
+	background-color: #314a9c;
+	border-radius: 0.2em;
+
+}
+.imgLocation {
+	height: 1.46em;
+	display: inline-block;
+	vertical-align: middle;
+	background-color: #F1E5E5;
+	padding: 0.4em;
+	
+	border: 1px solid #B5B5B5;
+	border-radius: 8px;
+}
+#planifica .ui-input-search {
+	width: 73%;
+	display: inline-block;
+
+}
+.imgLocation img{
+	width: 0.8em;
+	display: inline-block;	
+    
+
+}
+.ui-content {
+	text-align: center;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.boton{
+
+    width: 23%;
+    margin: 0.4em auto;
+
+}
+/*.content{
+	overflow-y: scroll;
+}*/
+
+.estacion {
+	width: 56%;
+	text-align: center;
+	background-color: #5950C5;
+	padding: 0.3em;
+	padding-top: 0.8em;
+	border-radius: 3px;
+	margin-top: 11px;
+	text-shadow: 0 0 2px #0E0707;
+	margin-left: .3em;
+	border: 1px solid #2D1CAC;
+	margin-bottom: 0.5em;
+	font-size: 0.9em;
+}
+#destino_planificador {
+	float: right;
+	margin-right: 0.4em;
+	margin-top: 0;
+}
+.recorrido{
+	width: 100%;
+	border-bottom: 1px solid #B5B5B5;
+	clear: both;
+	margin-top: 0.1em;
+	padding: 1em .6em;
+	
+
+}
+
+#horario_planificador {
+color: #000;
+margin-left: 0.6em;
+}
+.ruta_troncal {
+	background-color: #2900FF;
+
+	text-align: center;
+	height: 2em;
+	vertical-align: middle;
+	line-height: 2em;
+	border-radius: 8px;
+	font-size: 1.2em;
+	display: inline-block;
+	padding: 0 0.5em;
+	width: 2.3em;
+	margin-right: 0.3em;
+	text-shadow: -1px 0 #614DCA, 0 1px #614DCA, 1px 0 #614DCA, 0 -1px #614DCA;
+}
+.estacion_transbordo{
+	color:black;
+}
+.tiempo_recorrido {
+	color: #000;
+	text-align: right;
+	width: 79%;
+	position: relative;
+	bottom: -18px;
+	display: inline-block;
+}
+
+#enrutador{
+	height: 20%;
+	border-bottom: 1px solid #E2E2E2;
+}
+#contenedor_recorridos{
+	height: 60%;
+	width: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.ruta_troncal{
+	color:white;
+}
+#ul_listado_rutas, #ul_listado_estaciones, #ul_listado_paraderos, #origen_rutas,
+#ul_listado_alimentadores,#listador_paradas_ruta,#listador_paradas_station,#paradero_origen,
+#buscar_destino #paradero_destino, #buscar_destino #destino_rutas{
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.select_horizontal{
+	text-align: center;
+	border-bottom: 1px solid #E2E2E2;
+}
+.ui-input-search{
+	margin: 0 auto;
+	width: 70%;
+}
+.view2{
+	display: none;
+}
+ html head+body .ui-btn.ui-btn-b{
+	background-color: #7664D6;
+	border-color: #443092;
+	color: #FFF;
+	text-shadow: 0 1px 0 #6F43E0;
+}
+.ui-header .ui-title, .ui-footer .ui-title{
+margin: 0 5%;	
+}
+.mapa{
+	
+	margin: 0 auto;
+}
+h2,h4{
+color: #221564;
+margin: 0.3em auto;
+text-align: center;
+}
+h4{
+	padding: 0.5em;
+}
+
+#mapa_parada img {
+max-width: none;
+}
+.ui-mobile .ui-page-active {
+
+overflow: hidden!important;
+}
+footer {
+z-index: 2000;
+}
+
+.ui-btn{
+	text-overflow:auto;
+	overflow:visible;
+}
+.bold{
+	font-weight: bold;
+}
+
+.tranbordo_peatonal{
+	color: black;
+	width: 90%;
+}
+.transbordo_row{
+	font-size:0.8em;
+	border: 1px #000 solid;
+}
+.img_entidad{
+	width: 49%;
+}
+#informacion p{
+	margin: 0.6em 0.5em;
+}
+#informacion ul{
+	margin: 0.6em;
+}
+#informacion h4{
+	margin: 0.1em;
+}
+.sininternet{
+	text-align: center;
+	color: black;
+}
+ /*!
+* jQuery Mobile Icon Pack - Font Awesome version 1.4.0
+*
+* Copyright 2013 Andy Matthews
+* http://andyMatthews.net
+* Released under the GPL/MIT license.
+*
+*/
+
+.ui-icon-twitter:after { background-image: url('data:image/svg+xml;charset=US-ASCII,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%3C!DOCTYPE%20svg%20PUBLIC%20%22-%2F%2FW3C%2F%2FDTD%20SVG%201.1%20Tiny%2F%2FEN%22%20%22http%3A%2F%2Fwww.w3.org%2FGraphics%2FSVG%2F1.1%2FDTD%2Fsvg11-tiny.dtd%22%3E%3Csvg%20version%3D%221.1%22%20baseProfile%3D%22tiny%22%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20width%3D%2216px%22%20height%3D%2216px%22%20viewBox%3D%220%200%20500%20500%22%20xml%3Aspace%3D%22preserve%22%3E%20%3Cpath%20d%3D%22M452.009%20113.839q-18.694%2027.344-45.201%2046.596%200.279%203.906%200.279%2011.719%200%2036.272-10.603%2072.405t-32.227%2069.336-51.479%2058.733-71.987%2040.737-90.123%2015.207q-75.614%200-138.393-40.458%209.766%201.116%2021.763%201.116%2062.779%200%20111.886-38.504-29.297-0.558-52.456-17.997t-31.808-44.503q9.208%201.395%2017.020%201.395%2011.998%200%2023.716-3.069-31.25-6.417-51.758-31.11t-20.508-57.338v-1.116q18.973%2010.603%2040.737%2011.44-18.415-12.277-29.297-32.087t-10.882-42.969q0-24.554%2012.277-45.48%2033.761%2041.574%2082.171%2066.546t103.655%2027.762q-2.232-10.603-2.232-20.647%200-37.388%2026.367-63.755t63.755-26.367q39.063%200%2065.848%2028.46%2030.413-5.859%2057.199-21.763-10.324%2032.087-39.621%2049.665%2025.949-2.79%2051.897-13.951z%22%20fill%3D%22%23ffffff%22%20%2F%3E%3C%2Fsvg%3E') }
+.ui-nosvg .ui-icon-twitter:after { background-image: url('png_images/twitter.png'); }

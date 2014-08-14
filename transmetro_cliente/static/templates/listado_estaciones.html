@@ -1,0 +1,33 @@
+<div class="header" data-role="header" >
+    <h1> Estaciones y Paraderos</h1>
+</div>
+
+<div class="content">
+    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" class="select_horizontal">
+        <input type="radio" name="radio-choice-b" id="radio-choice-c" value="list" checked="checked"  ref="view1">
+        <label for="radio-choice-c">Estaciones</label>
+        <input type="radio" name="radio-choice-b" id="radio-choice-d" value="grid" ref="view2">
+        <label for="radio-choice-d">Paraderos</label>        
+</fieldset>
+    <div id="view_list_estaciones" class="view1 view">
+        <ul data-role="listview" id="ul_listado_estaciones" data-filter="true" data-filter-placeholder="Buscar" > 
+        
+
+        </ul>
+        
+    </div>
+    <div class="view2 view">
+        <ul data-role="listview" id="ul_listado_paraderos" data-filter="true" data-filter-placeholder="Buscar" > 
+           
+        </ul>
+
+    </div>
+</div>
+<!--  -->
+<div data-role="footer" class="footer">
+    <a href="#planifica" class="btn_footer"> <img class="iconsFooter" src="images/iconPlaner.png"></a>    
+    <a href="#listado_rutas"class="btn_footer"> <img class="iconsFooter" src="images/iconRoute.png"></a>
+    <a href="#listado_estaciones" class="btn_footer"> <img class="iconsFooter" src="images/House.png"></a>    
+    <a href="#mapa"class="btn_footer"> <img class="iconsFooter" src="images/iconMap.png"></a>
+</div>
+

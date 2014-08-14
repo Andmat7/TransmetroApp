@@ -1,0 +1,36 @@
+<div class="header" data-role="header" >
+    <a class="ui-btn ui-btn-b    ui-corner-all ui-icon-arrow-l ui-btn-icon-notext ui-shadow-icon atras"  data-direction="reverse">Plus</a>
+    <h1 id="name_ruta"> </h1>
+</div>
+
+<div class="content">
+<h2 id="route_long_name"></h2>
+    <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true" class="select_horizontal">
+            <input type="radio" name="radio-choice-b" id="radio-choice-c" value="list" checked="checked" ref="view1">
+            <label for="radio-choice-c">Paradas</label>
+            <input type="radio" name="radio-choice-b" id="radio-choice-d" value="grid" ref="view2">
+            <label for="radio-choice-d">Mapa</label>        
+    </fieldset>
+    <div class="view1 view" id="view_list_rutas"> 
+    <ul id="listador_paradas_ruta" data-role="listview">
+        
+    </ul>
+    </div>
+    <div class="view2  view">
+        <div id="mapa_ruta" class="mapa sininternet">
+            <span> No se pudo conectar a Internet</span>
+            
+        </div>
+
+    </div>     
+
+
+</div>
+
+
+<div data-role="footer" class="footer">
+    <a href="#planifica" class="btn_footer"> <img class="iconsFooter" src="images/iconPlaner.png"></a>    
+    <a href="#listado_rutas"class="btn_footer"> <img class="iconsFooter" src="images/iconRoute.png"></a>
+    <a href="#listado_estaciones" class="btn_footer"> <img class="iconsFooter" src="images/House.png"></a>    
+    <a href="#mapa"class="btn_footer"> <img class="iconsFooter" src="images/iconMap.png"></a>
+</div>

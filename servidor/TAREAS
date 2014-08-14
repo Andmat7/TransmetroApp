@@ -1,0 +1,5 @@
+SELECT stops.stop_id, stop_name, stop_lat,stop_lon, route_id trip_id FROM `stops` 
+RIGHT JOIN stop_times ON stop_times.stop_id=stops.stop_id 
+RIGHT JOIN trips ON trips.trip_id=stop_times.trip_id 
+WHERE parent_station=0
+GROUP BY stops.stop_id 
