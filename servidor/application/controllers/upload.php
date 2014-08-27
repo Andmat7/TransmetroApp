@@ -89,11 +89,12 @@ class Upload extends CI_Controller {
             $command = "C:\\xampp\\mysql\\bin>mysql.exe -u".$CI->db->username." -h ".$CI->db->hostname." < ".$path."/sql/GTFS.sql";
         }
         
-        //echo $command;
-        //exit;
+        // echo $command;
+        // exit;
 
-        $output = shell_exec($command);
-        
+        // $output = shell_exec($command);
+        // echo $output;
+        // exit;
         $tiempo_fin = $this->microtime_float();
         $tiempo = $tiempo_fin - $tiempo_inicio;
         $salida=array("already"=>true,"message_already"=> "Creada base de datos","next_message"=>"Creando base de datos","tiempo"=>($tiempo_fin - $tiempo_inicio));

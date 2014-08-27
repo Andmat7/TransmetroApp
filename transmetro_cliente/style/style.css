@@ -125,10 +125,11 @@ margin-left: 0.6em;
 .tiempo_recorrido {
 	color: #000;
 	text-align: right;
-	width: 79%;
+	/* width: 79%; */
 	position: relative;
-	bottom: -18px;
-	display: inline-block;
+	bottom: 0px;
+	/* display: inline-block; */
+	right: 38px;
 }
 
 #enrutador{

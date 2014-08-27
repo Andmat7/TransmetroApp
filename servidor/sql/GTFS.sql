@@ -115,7 +115,10 @@ CREATE TABLE stops(
     CREATE TABLE transfer(
         route_id VARCHAR(20),
         stop_id VARCHAR(20),
-        stop_sequence VARCHAR(20)
+        stop_sequence VARCHAR(20),
+        pedestrian_stop VARCHAR(20),
+        only_pedestrian INT(1)
+
     );
 LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\agency.txt'  INTO TABLE agency
     FIELDS TERMINATED BY ','
@@ -162,7 +165,7 @@ LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_t
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
-    (route_id,stop_id,stop_sequence);
+    (route_id,stop_id,stop_sequence,pedestrian_stop,only_pedestrian);
 LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\feed_info.txt' INTO TABLE  feed_info
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'

@@ -46,10 +46,15 @@ jQuery( "#buscar_destino" ).on( "pageshow", function( event ) {
   $( "#destino_rutas li,#paradero_destino li" ).off("click").on('click',
 
     function(evento,elemento) {
-      window.planifica.arrive=$(this).text();
       
-      stopid_arrive=$(this).attr('stopid');
-      change_page("#planifica");
+      if ($(this).attr('stopid')!==undefined) {
+        window.planifica.arrive=$(this).text();
+      
+        stopid_arrive=$(this).attr('stopid');
+        change_page("#planifica");
+
+      };
+      
       
     });
 });

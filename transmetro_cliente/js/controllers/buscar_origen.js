@@ -184,10 +184,14 @@ function dibuja_mapa_geo () {
 }
 ui_heigth();
 jQuery( "#buscar_origen" ).on( "pageshow", function( event ) {
-  $( "#origen_rutas li,#paradero_origen li" ).off("click").on('click',function(evento,elemento) { //# es el id  // "." class
-     window.planifica.departure=$(this).text();
-     stopid_departure=$(this).attr('stopid');
-     change_page("#planifica");
+  $( "#origen_rutas li,#paradero_origen li" ).off("click").on('click',function(evento,elemento) { 
+    if ($(this).attr('stopid')!==undefined) {
+      window.planifica.departure=$(this).text();
+      stopid_departure=$(this).attr('stopid');
+      change_page("#planifica");
+
+    };
+     
     
   });
 });

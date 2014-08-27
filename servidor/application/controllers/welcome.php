@@ -286,7 +286,7 @@ class Welcome extends CI_Controller {
 		//$query = $this->db->query('RESET QUERY CACHE;');
 		$tiempo_inicio = $this->microtime_float();
 		$this->db->select('route_id,route_short_name,route_long_name,route_url,route_color,');
-		$this->db->order_by("route_long_name", "asc");
+		$this->db->order_by("route_short_name", "asc");
 		$this->db->from('routes');
 		$query = $this->db->get();
 		
