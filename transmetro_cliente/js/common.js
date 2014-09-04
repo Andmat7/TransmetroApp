@@ -622,13 +622,14 @@ function onDeviceReady() {
   //load_google();
 
   //navigator.geolocation.getCurrentPosition(load_geo, onError);
-  document.addEventListener("backbutton", function (e) {
-    if (!enable_change_page) {
-      alert("bloqueado");
-      e.preventDefault();
-    };
+  // document.addEventListener("backbutton", function (e) {
+  //   e.preventDefault();
+  //   if (!enable_change_page) {
+  //     //alert("bloqueado");
+  //     //e.preventDefault();
+  //   };
             
-  }, false );
+  // }, false );
 
 }
 function nonRoutesRepeat (untransbordo) {
@@ -805,18 +806,18 @@ function unTransbordo (station_depart_id, station_arrive_id) {
         var transfer_route="";
         var transfer_stop="";
         var transfer_stop_sequence="";
+        var only_pedestrian=0;
       
         for (var o = 0; o < longitud_o; o++) {
           if (tmp_unRouteDeparture[i].route_id == dataGets.transfer[o].route_id) {
             //if (dataGets.transfer[o].stop_sequence==0) {
-              if (dataGets.transfer[0].only_pedestrian==1) {
-                break_transfer=true;  
-              }else{
-                break_transfer=false;
-              }
+            only_pedestrian=dataGets.transfer[o].only_pedestrian;
+              
+              
               
               var range_transfer=serviceVerify(tmp_unRouteDeparture[i].range);
               if (range_transfer[0]) {
+                break_transfer=true;
                 
                 for (var p = tmp_unRouteDeparture[i].secuencia.length - 1; p >= 0; p--) {
                   if (range_transfer[2]==tmp_unRouteDeparture[i].secuencia[p][0]) {
@@ -845,14 +846,13 @@ function unTransbordo (station_depart_id, station_arrive_id) {
             
           }
           else if (tmp_unRouteArrive[j].route_id == dataGets.transfer[o].route_id) {
-          //  if (dataGets.transfer[o].stop_sequence==0) {
+            only_pedestrian=dataGets.transfer[o].only_pedestrian;
             var range_transfer=serviceVerify(tmp_unRouteArrive[j].range);
-              if (dataGets.transfer[0].only_pedestrian==1) {
-                break_transfer=true;  
-              }else{
-                break_transfer=false;
-              }
+              
+                
+              
               if (range_transfer[0]) {
+                break_transfer=true;
                 
                 for (var p = tmp_unRouteArrive[j].secuencia.length - 1; p >= 0; p--) {
                   if (range_transfer[2]==tmp_unRouteArrive[j].secuencia[p][0]) {
@@ -882,26 +882,29 @@ function unTransbordo (station_depart_id, station_arrive_id) {
           for (var k = 0; k < longitud_k; k++) {
             
             var longitud_l = tmp_unRouteArrive[j].secuencia.length;
-           
+            var break_longitud=false;
             for (var l = 0; l < longitud_l; l++) {
               if (break_transfer) {
                 if (tmp_unRouteDeparture[i].route_id == transfer_route) {
                   
                   console.log("transfer_stop_sequence"+transfer_stop_sequence);
-                  conect_stop.push({"arrive": tmp_unRouteDeparture[i].secuencia[k].stops[(transfer_stop_sequence-1)].stop_id,
+                  conect_stop.push({"arrive": transfer_stop_arrive,
                                     "depart": transfer_stop}); 
+                 break_longitud=true; 
                   
-                  break;
                 }
                 else if (tmp_unRouteArrive[j].route_id == transfer_route) {
                   
                 
                   conect_stop.push({"arrive": transfer_stop,
-                                    "depart": tmp_unRouteArrive[j].secuencia[l].stops[(transfer_stop_sequence-1)].stop_id});
-              
-                  break;
+                                    "depart": transfer_stop_arrive });
+                  break_longitud=true;
+                  
                 };
-              }else{
+              }
+              if (only_pedestrian==0) {  
+
+              
       
                 var longitud_m = tmp_unRouteDeparture[i].secuencia[k].stops.length;
                 var longitud_n = tmp_unRouteArrive[j].secuencia[l].stops.length;
@@ -912,6 +915,7 @@ function unTransbordo (station_depart_id, station_arrive_id) {
                     {
                       conect_stop.push({"arrive": tmp_unRouteDeparture[i].secuencia[k].stops[m].stop_id,
                                         "depart": tmp_unRouteArrive[j].secuencia[l].stops[n].stop_id});
+                      break_longitud=true;
                       break;
                     }
                       else {
@@ -924,6 +928,9 @@ function unTransbordo (station_depart_id, station_arrive_id) {
                 //break;
 
               }
+              if (break_longitud) {
+                break;
+              };
               
             };
             break;
@@ -948,9 +955,11 @@ function unTransbordo (station_depart_id, station_arrive_id) {
                                   "unto_stop_id": conect_stop[i].depart
 
                                 };
-        define_untransbordo.push({"route1": R1[0].name_route, "stop_name": stations_transfer,
-                                     "timetrip": 
-                                    (R1[0].time_route+extra_time) });
+        define_untransbordo.push({
+                                  "route1": R1[0].name_route, 
+                                  "stop_name": stations_transfer,
+                                  "timetrip":(R1[0].time_route+extra_time) 
+                                });
 
       }
       
@@ -961,8 +970,8 @@ function unTransbordo (station_depart_id, station_arrive_id) {
                                   "unto_stop_id": conect_stop[i].depart
                                    };
         define_untransbordo.push({ "stop_name": stations_transfer,
-                                    "route2": R2[0].name_route, "timetrip": 
-                                    (R2[0].time_route+extra_time) });
+                                    "route2": R2[0].name_route, 
+                                    "timetrip": (R2[0].time_route+extra_time) });
 
 
       }
@@ -1087,6 +1096,12 @@ function mascerca (array_stops, pos_lat,pos_long) {
   return array_ordenados;
   
 }
+
+/*
+1/calcula todas la rutas que tienen en común en conect_route
+2.por cada secuencia ystop en conect route 
+
+*/
 function dosTransbordos (station_depart_id, station_arrive_id) {
   //console.time("dosTransbordos");
   var doRouteDeparture=[];
@@ -1158,18 +1173,21 @@ function dosTransbordos (station_depart_id, station_arrive_id) {
           for (var l = 0; l < longitud_l; l++) {
             if (conect_route[i].route_id == dataGets.transfer[l].route_id) {
               var last_peatonal = false;
-              if (dataGets.transfer[l].stop_id!==station_depart_id && dataGets.transfer[l].stop_id!==station_arrive_id) {
+              if (dataGets.transfer[l].stop_id!==station_depart_id && 
+                  dataGets.transfer[l].stop_id!==station_arrive_id) {
                 
                 if (range_transfer[0]) {
                   
                     if (range_transfer[2]==conect_route[i].secuencia[j][0]) {
+
+
                       for (var q = conect_route[i].secuencia[j].stops.length - 1; q >= 0; q--) {
-                        if (conect_route[i].secuencia[j].stops[q].stop_id==dataGets.transfer[j].pedestrian_stop) {
+                        if (conect_route[i].secuencia[j].stops[q].stop_id==dataGets.transfer[l].pedestrian_stop) {
                           R1 = unTransbordo(station_depart_id, dataGets.transfer[l].stop_id);
                           R2 = defineRoute(conect_route[i].secuencia[j].stops[0].stop_id, station_arrive_id);
                           extra_time = 5;
                           stations_transfer = {"from_stop": getStation(dataGets.transfer[l].stop_id),
-                                               "unto_stop": getStation(dataGets.transfer[j].pedestrian_stop)};
+                                               "unto_stop": getStation(dataGets.transfer[l].pedestrian_stop)};
                           if (conect_route[i].secuencia[j].stops[0].stop_id == station_arrive_id) {
                             var last_peatonal = true;
                             //console.log("Ultimo transbordo peatonal");
@@ -1201,7 +1219,7 @@ function dosTransbordos (station_depart_id, station_arrive_id) {
             
           };
 
-          if (!R1 && !R2) {
+          if (!R1 || !R2) {
 
             R1 = unTransbordo(station_depart_id, conect_route[i].secuencia[j].stops[k].stop_id);
             R2 = defineRoute(conect_route[i].secuencia[j].stops[k].stop_id, station_arrive_id);

@@ -90,53 +90,88 @@ while (num_transbordos < 3) {
 //					console.log("On rutas.js executing runProgram() function");
 					if (transshipment_route[i].stop_name1.from_stop == transshipment_route[i].stop_name1.unto_stop) {
 						if (transshipment_route[i].stop_name2.from_stop == transshipment_route[i].stop_name2.unto_stop) {
-							$('#contenedor_recorridos').append('<div class="recorrido"><div class="ruta_troncal">'+
-								transshipment_route[i].route1+'</div><div class="estacion_transbordo">Transbordo 1: <strong >'+
+							var recorrido_transbordo='<div class="recorrido">';
+							if (transshipment_route[i].route1) {
+								recorrido_transbordo=recorrido_transbordo+'<div class="ruta_troncal">'+
+													transshipment_route[i].route1+'</div>';
+							}
+							recorrido_transbordo=recorrido_transbordo+'<div class="estacion_transbordo">Transbordo 1: <strong >'+
 								transshipment_route[i].stop_name1.from_stop+'</strong></div><div class="ruta_troncal">'+
 								transshipment_route[i].route2+'</div><div class="estacion_transbordo">Transbordo 2: <strong >'+
-								transshipment_route[i].stop_name2.from_stop+'</strong></div><div class="ruta_troncal">'+
-								transshipment_route[i].route3+'</div><div class="tiempo_recorrido">'+
-								transshipment_route[i].timetrip+' min</div></div>'
+								transshipment_route[i].stop_name2.from_stop+'</strong></div>';
+							if (transshipment_route[i].route3) {
+								recorrido_transbordo=recorrido_transbordo+'<div class="ruta_troncal">'+transshipment_route[i].route3+
+								'</div>';
+							}
+							recorrido_transbordo=recorrido_transbordo+'<div class="tiempo_recorrido">'+
+								transshipment_route[i].timetrip+' min</div></div>';
+							$('#contenedor_recorridos').append(recorrido_transbordo
 							);
 						}
 						else {
-							$('#contenedor_recorridos').append('<div class="recorrido"><div class="ruta_troncal">'+
-								transshipment_route[i].route1+'</div><div class="estacion_transbordo">Transbordo 1: <strong >'+
+							var recorrido_transbordo='<div class="recorrido">';
+							if (transshipment_route[i].route1) {
+								recorrido_transbordo=recorrido_transbordo+'<div class="ruta_troncal">'+
+													transshipment_route[i].route1+'</div>';
+							}
+							recorrido_transbordo=recorrido_transbordo+'<div class="estacion_transbordo">Transbordo 1: <strong >'+
 								transshipment_route[i].stop_name1.from_stop+'</strong></div><div class="ruta_troncal">'+
 								transshipment_route[i].route2+'</div><table class="tranbordo_peatonal" ><tr><td rowspan="2" width="30%">'+
 								'Transbordo peatonal</td><td class="transbordo_row" width="50%">DE: <span>'+
 								transshipment_route[i].stop_name2.from_stop+'</span></td></tr><tr><td class="transbordo_row" widht=540%">A: <span>'+
-								transshipment_route[i].stop_name2.unto_stop+'</span></td></tr></table><div class="ruta_troncal">'+
-								transshipment_route[i].route3+'</div><div class="tiempo_recorrido">'+
-								transshipment_route[i].timetrip+' min</div></div>'
-							);
+								transshipment_route[i].stop_name2.unto_stop+'</span></td></tr></table>';
+							if (transshipment_route[i].route3) {
+								recorrido_transbordo=recorrido_transbordo+'<div class="ruta_troncal">'+transshipment_route[i].route3+
+								'</div>';
+							}
+							recorrido_transbordo=recorrido_transbordo+'<div class="tiempo_recorrido">'+transshipment_route[i].timetrip+' min</div></div>';
+							$('#contenedor_recorridos').append(recorrido_transbordo);
 						}
 					}
 					else {
 						if (transshipment_route[i].stop_name2.from_stop == transshipment_route[i].stop_name2.unto_stop) {
-							$('#contenedor_recorridos').append('<div class="recorrido"><div class="ruta_troncal">'+
-								transshipment_route[i].route1+'</div><table class="tranbordo_peatonal" ><tr><td rowspan="2" width="30%">'+
+							var recorrido_transbordo='<div class="recorrido">';
+							if (transshipment_route[i].route1) {
+								recorrido_transbordo=recorrido_transbordo+'<div class="ruta_troncal">'+
+													transshipment_route[i].route1+'</div>';
+							}
+							recorrido_transbordo=recorrido_transbordo+'<table class="tranbordo_peatonal" ><tr><td rowspan="2" width="30%">'+
 								'Transbordo peatonal</td><td class="transbordo_row" width="50%">DE: <span>'+
 								transshipment_route[i].stop_name1.from_stop+'</span></td></tr><tr><td class="transbordo_row" widht=540%">A: <span>'+
 								transshipment_route[i].stop_name1.unto_stop+'</span></td></tr></table><div class="ruta_troncal">'+
 								transshipment_route[i].route2+'</div><div class="estacion_transbordo">Transbordo 2: <strong >'+
-								transshipment_route[i].stop_name2.from_stop+'</strong></div><div class="ruta_troncal">'+
-								transshipment_route[i].route3+'</div><div class="tiempo_recorrido">'+
-								transshipment_route[i].timetrip+' min</div></div>'
+								transshipment_route[i].stop_name2.from_stop+'</strong></div>';
+							if (transshipment_route[i].route3) {
+								recorrido_transbordo=recorrido_transbordo+'<div class="ruta_troncal">'+transshipment_route[i].route3+
+								'</div>';
+							}
+							recorrido_transbordo=recorrido_transbordo+'<div class="tiempo_recorrido">'+
+								transshipment_route[i].timetrip+' min</div></div>';
+							$('#contenedor_recorridos').append(recorrido_transbordo
 							);
+
 						}
 						else {
-							$('#contenedor_recorridos').append('<div class="recorrido"><div class="ruta_troncal">'+
-								transshipment_route[i].route1+'</div><table class="tranbordo_peatonal" ><tr><td rowspan="2" width="30%">'+
+							var recorrido_transbordo='<div class="recorrido">';
+							if (transshipment_route[i].route1) {
+								recorrido_transbordo=recorrido_transbordo+'<div class="ruta_troncal">'+
+													transshipment_route[i].route1+'</div>';
+							}
+							recorrido_transbordo=recorrido_transbordo+'<table class="tranbordo_peatonal" ><tr><td rowspan="2" width="30%">'+
 								'Transbordo peatonal</td><td class="transbordo_row" width="50%">DE: <span>'+
 								transshipment_route[i].stop_name1.from_stop+'</span></td></tr><tr><td class="transbordo_row" widht=540%">A: <span>'+
 								transshipment_route[i].stop_name1.unto_stop+'</span></td></tr></table><div class="ruta_troncal">'+
 								transshipment_route[i].route2+'</div><table class="tranbordo_peatonal" ><tr><td rowspan="2" width="30%">'+
 								'Transbordo peatonal</td><td class="transbordo_row" width="50%">DE: <span>'+
 								transshipment_route[i].stop_name2.from_stop+'</span></td></tr><tr><td class="transbordo_row" widht=540%">A: <span>'+
-								transshipment_route[i].stop_name2.unto_stop+'</span></td></tr></table><div class="ruta_troncal">'+
-								transshipment_route[i].route3+'</div><div class="tiempo_recorrido">'+
-								transshipment_route[i].timetrip+' min</div></div>'
+								transshipment_route[i].stop_name2.unto_stop+'</span></td></tr></table>';
+							if (transshipment_route[i].route3) {
+								recorrido_transbordo=recorrido_transbordo+'<div class="ruta_troncal">'+transshipment_route[i].route3+
+								'</div>';
+							}
+							recorrido_transbordo=recorrido_transbordo+'<div class="tiempo_recorrido">'+
+								transshipment_route[i].timetrip+' min</div></div>';
+							$('#contenedor_recorridos').append(recorrido_transbordo
 							);
 						}
 					}
@@ -146,7 +181,7 @@ while (num_transbordos < 3) {
 		}
 	num_transbordos++;
 }
-
+	
 $("#contenedor_recorridos").append('<div style="height:100px"></div>');
 $("#rutas").trigger('create');
 boton_back ("rutas");
