@@ -80,7 +80,7 @@ while (num_transbordos < 3) {
 			}
 			break;
 		case 2:
-			var max_dos_transbordos=2-contador_respuestas ;
+			var max_dos_transbordos=4-contador_respuestas ;
 			//for (var i = 0, l=transshipment_route.length; i < l; i++) {
 			if (max_dos_transbordos>0) {
 				if (max_dos_transbordos>transshipment_route.length) {

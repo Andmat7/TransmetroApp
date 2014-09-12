@@ -18,11 +18,22 @@ ruta=ruta[0];
 
 rutas_por_id.filterAll();
 var paradas=[];
-if(ruta.secuencia[1]===undefined){
-ruta_paradas=ruta.secuencia[0].stops;
-}else{
-  ruta_paradas=ruta.secuencia[1].stops;
+var range_route='';
+for (var i = ruta.range['H'].length - 1; i >= 0; i--) {
+  if (ruta.range['H'][i].start_time<"21:00:00"||ruta.range['H'][i].end_time>"08:00:00") {
+   range=ruta.range['H'][i].secuencia;
+   break;
+  }
+
 }
+for (var secuencia_long = ruta.secuencia.length - 1; secuencia_long >= 0; secuencia_long--) {
+  
+  if (ruta.secuencia[secuencia_long][0]==range) {
+    ruta_paradas=ruta.secuencia[secuencia_long].stops;
+  }
+
+}
+
 for (var i = ruta_paradas.length - 1; i >= 0; i--) {
 
     var secuencia=parseInt(ruta_paradas[i].stop_sequence,0);

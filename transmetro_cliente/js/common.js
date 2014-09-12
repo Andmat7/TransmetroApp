@@ -530,11 +530,13 @@ function defineRoute (station_depart_id, station_arrive_id){
   }
 
   var timesAndRoutes = [];
+  
   longitud_i = define_route.length;
+
   for (var i = 0; i < longitud_i; i++) {
     timesAndRoutes.push({'time_route': define_timetrip[i], 'name_route': define_route[i] });
   }
-
+  timesAndRoutes=timesAndRoutes.uniqueArrayObjects();
   timesAndRoutes.sort(function(a, b) {
     return a.time_route - b.time_route;
   });
@@ -549,7 +551,11 @@ function addScript( url, callback ) {
     script.src = url;
     document.body.appendChild( script );
 }
-
+/*
+Arroja un array con dos vectores
+el primero las rutas que pasan por station_depart_id
+el segundo las rutas que pasan por station_arrive_id
+*/
 function selectRoutes (station_depart_id, station_arrive_id) {
   var routeDeparture=[];
   var routeArrive=[];
@@ -616,22 +622,7 @@ function verify_google (function_name) {
   
 }
 
-function onDeviceReady() {
-  //google.maps.event.addDomListener(window, 'load', setup);
-  // get device's geographical location and return it as a Position object (which is then passed to onSuccess)
-  //load_google();
 
-  //navigator.geolocation.getCurrentPosition(load_geo, onError);
-  // document.addEventListener("backbutton", function (e) {
-  //   e.preventDefault();
-  //   if (!enable_change_page) {
-  //     //alert("bloqueado");
-  //     //e.preventDefault();
-  //   };
-            
-  // }, false );
-
-}
 function nonRoutesRepeat (untransbordo) {
   var longitud_i = untransbordo.length;
   array_transbordos=[];
@@ -887,7 +878,7 @@ function unTransbordo (station_depart_id, station_arrive_id) {
               if (break_transfer) {
                 if (tmp_unRouteDeparture[i].route_id == transfer_route) {
                   
-                  console.log("transfer_stop_sequence"+transfer_stop_sequence);
+
                   conect_stop.push({"arrive": transfer_stop_arrive,
                                     "depart": transfer_stop}); 
                  break_longitud=true; 
@@ -1096,35 +1087,25 @@ function mascerca (array_stops, pos_lat,pos_long) {
   return array_ordenados;
   
 }
-
-/*
-1/calcula todas la rutas que tienen en común en conect_route
-2.por cada secuencia ystop en conect route 
-
-*/
-function dosTransbordos (station_depart_id, station_arrive_id) {
-  //console.time("dosTransbordos");
+function rutas_conexas (station_depart_id, station_arrive_id) {
   var doRouteDeparture=[];
   var doRouteArrive=[];
-  var stopsDep=[];
-  var stopsArr=[];
+
   var conect_route=[];
-  var define_dotransbordo=[]; 
+
 
   doRoute=selectRoutes(station_depart_id, station_arrive_id);
   doRouteDeparture=doRoute[0];
   doRouteArrive=doRoute[1];
+  var routes_dep = doRouteDeparture.noduplicated(doRouteArrive);
+  var routes_arr = doRouteArrive.noduplicated(doRouteDeparture);
   
   if (doRouteDeparture.compare(doRouteArrive) || doRouteDeparture.length==0 || doRouteArrive.length==0) {
     return false;
   }
-  else {
-    var routes_dep = doRouteDeparture.noduplicated(doRouteArrive);
-    var routes_arr = doRouteArrive.noduplicated(doRouteDeparture);
-
-    if (routes_dep.length==0 || routes_arr.length==0) {
+  if (routes_dep.length==0 || routes_arr.length==0) {
       return false;
-    };
+  };
 
     routes_dep = routes_dep.uniqueArrayObjects();
     routes_arr = routes_arr.uniqueArrayObjects();
@@ -1133,9 +1114,9 @@ function dosTransbordos (station_depart_id, station_arrive_id) {
     for (var j = 0, l1=routes_arr.length; j < l1; j++) {
       id_selected.push(routes_arr[j].route_id);
     };
-    for (var k = 0,  l2=routes_dep.length; k < l2; k++) {
-      id_selected.push(routes_dep[k].route_id);
-    };
+    // for (var k = 0,  l2=routes_dep.length; k < l2; k++) {
+    //   id_selected.push(routes_dep[k].route_id);
+    // };
 
     id_selected = id_selected.unique();
 
@@ -1157,119 +1138,240 @@ function dosTransbordos (station_depart_id, station_arrive_id) {
     if (conect_route.length==0) {
       return false;
     };
-
-    for (var i = 0, longitud_i=conect_route.length; i < longitud_i; i++) {
-      var range_transfer=serviceVerify(conect_route[i].range);
+    return conect_route;
 
 
-      var longitud_j = conect_route[i].secuencia.length;
-      for (var j = 0; j < longitud_j; j++) {
+}
+/*
+1/calcula todas la rutas que tienen en común en conect_route
+2.por cada secuencia ystop en conect route 
+
+*/
+function dosTransbordos (station_depart_id, station_arrive_id) {
+  //console.time("dosTransbordos");
+  var conect_route=rutas_conexas (station_depart_id, station_arrive_id)
+  if (!conect_route) {
+    return false;
+  };
+  var define_dotransbordo=[];
+  console.time("for1");
+  for (var i = 0, longitud_i=conect_route.length; i < longitud_i; i++) {
+    var range_transfer=serviceVerify(conect_route[i].range);
+    var longitud_j = conect_route[i].secuencia.length;
+    console.time("forj"+j);
+    for (var j = 0; j < longitud_j; j++) {
+      if (range_transfer[2]==conect_route[i].secuencia[j][0]) {
+        var ruta_transfer=false;
+        var longitud_l = dataGets.transfer.length;
+        var only_pedestrian=0;
+        for (var l = 0; l < longitud_l; l++) {
+          if (conect_route[i].route_id == dataGets.transfer[l].route_id) {
+            var is_transfer=true;
+            var contador_transfer=l;
+            only_pedestrian=dataGets.transfer[l].only_pedestrian;
+            break;
+          }
+        }
+         
         var longitud_k = conect_route[i].secuencia[j].stops.length;
         for (var k = 0; k < longitud_k; k++) {
           var R1, R2;
           var extra_time = 0;
-          var stations_transfer;
-          var longitud_l = dataGets.transfer.length;
-          for (var l = 0; l < longitud_l; l++) {
-            if (conect_route[i].route_id == dataGets.transfer[l].route_id) {
-              var last_peatonal = false;
-              if (dataGets.transfer[l].stop_id!==station_depart_id && 
-                  dataGets.transfer[l].stop_id!==station_arrive_id) {
+          var break_transfer=false;
+
+          if (is_transfer) {
+          
+
+            if (conect_route[i].secuencia[j].stops[k].stop_id==dataGets.transfer[contador_transfer].pedestrian_stop) {
+              if (dataGets.transfer[contador_transfer].stop_id!==station_depart_id && 
+                dataGets.transfer[contador_transfer].stop_id!==station_arrive_id) {
                 
-                if (range_transfer[0]) {
-                  
-                    if (range_transfer[2]==conect_route[i].secuencia[j][0]) {
-
-
-                      for (var q = conect_route[i].secuencia[j].stops.length - 1; q >= 0; q--) {
-                        if (conect_route[i].secuencia[j].stops[q].stop_id==dataGets.transfer[l].pedestrian_stop) {
-                          R1 = unTransbordo(station_depart_id, dataGets.transfer[l].stop_id);
-                          R2 = defineRoute(conect_route[i].secuencia[j].stops[0].stop_id, station_arrive_id);
-                          extra_time = 5;
-                          stations_transfer = {"from_stop": getStation(dataGets.transfer[l].stop_id),
-                                               "unto_stop": getStation(dataGets.transfer[l].pedestrian_stop)};
-                          if (conect_route[i].secuencia[j].stops[0].stop_id == station_arrive_id) {
-                            var last_peatonal = true;
-                            //console.log("Ultimo transbordo peatonal");
-                          }
+                var trasbordos_news=conectar_rutas (station_depart_id,station_arrive_id,dataGets.transfer[contador_transfer].stop_id,dataGets.transfer[contador_transfer].pedestrian_stop,extra_time);
+                define_dotransbordo=define_dotransbordo.concat(trasbordos_news); 
                 
-
-                        };
-
-
-
-
-                      }
-
-
-
-                    }
-
-
-                  
-                }
-                
-              //console.log("Bien 'if' de dataGets.transfer");
-              
-
-              };
-              break;
-              
-            };
-            
-          };
-
-          if (!R1 || !R2) {
-
-            R1 = unTransbordo(station_depart_id, conect_route[i].secuencia[j].stops[k].stop_id);
-            R2 = defineRoute(conect_route[i].secuencia[j].stops[k].stop_id, station_arrive_id);
-
-            extra_time = 0;
-            stations_transfer = {"from_stop": getStation(conect_route[i].secuencia[j].stops[k].stop_id),
-                                 "from_stop_id":conect_route[i].secuencia[j].stops[k].stop_id,
-                                 "unto_stop": getStation(conect_route[i].secuencia[j].stops[k].stop_id),
-                                 "unto_stop_id":conect_route[i].secuencia[j].stops[k].stop_id
-                               };
-            if (conect_route[i].secuencia[j].stops[0].stop_id == station_arrive_id) {
-              var last_peatonal = true;
-              //console.log("Ultimo transbordo peatonal");
-            }
-            else {
-              var last_peatonal = false;
-            };
-          };
-
-          if (!R1 || !R2) {
-            continue;
-          };
-
-          var longitud_m = R1.length;
-          var longitud_n = R2.length;
-          for (var m = 0; m < longitud_m; m++) {
-            for (var n = 0; n < longitud_n; n++) {
-              if (last_peatonal) {
-                R2[n].name_route = "";
-                R2[n].time_route = 0;
-              }else{              
-                var triptime = (R1[m].triptime + R2[n].time_route + extra_time);
-                if (R1[m].stop_name.unto_stop_id!==station_arrive_id) {
-                  define_dotransbordo.push({"route1": R1[m].route1, "stop_name1": R1[m].stop_name,
-                                          "route2": R1[m].route2, "stop_name2": stations_transfer,
-                                          "route3": R2[n].name_route, "timetrip": 
-                                          (R1[m].timetrip + R2[n].time_route + extra_time)
-                                        }
-                                      );
-
-                };
+                break_transfer=true;
               }
               
+            }
+
+          }
+          if (!only_pedestrian) {
+            
+            var trasbordos_news=conectar_rutas (station_depart_id,station_arrive_id,conect_route[i].secuencia[j].stops[k].stop_id,conect_route[i].secuencia[j].stops[k].stop_id,extra_time);
+            if (trasbordos_news.length>0) {
+              define_dotransbordo=define_dotransbordo.concat(trasbordos_news);
+              break;
+
             };
+            
+            
+          }else{
+            if (break_transfer) {
+              break;
+            };
+
+          }
+        }
+        
+
+      };
+      
+    }
+    console.timeEnd("forj"+j)
+  }
+
+  console.timeEnd("for1");
+  if (define_dotransbordo.length==0) {
+    //
+    return false;
+  };
+
+  define_dotransbordo = define_dotransbordo.uniqueArrayObjects();
+
+  define_dotransbordo.sort(function(a, b) {
+    return a.timetrip - b.timetrip;
+  });
+
+  //console.timeEnd("dosTransbordos");
+  return define_dotransbordo;
+}
+function conectar_rutas (station_depart,station_arrive,from_stop,unto_stop,extra_time) {
+  
+  R1 = unTransbordo(station_depart, from_stop);
+  R2 = defineRoute(unto_stop, station_arrive);
+  define_dotransbordo=[];
+  
+  stations_transfer = {
+    "from_stop": getStation(from_stop),
+    "from_stop_id":from_stop,
+    "unto_stop": getStation(unto_stop),
+    "unto_stop_id":unto_stop
+  };
+  
+  var longitud_m = R1.length;
+  var longitud_n = R2.length;
+  for (var m = 0; m < longitud_m; m++) {
+    for (var n = 0; n < longitud_n; n++) {
+      var triptime = (R1[m].triptime + R2[n].time_route + extra_time);
+        if (R1[m].stop_name.unto_stop_id!==station_arrive) {
+          if (R1[m].route2== undefined) {
+            R1[m].route2='';
           };
-          break;
+          define_dotransbordo.push(
+          {
+            "route1": R1[m].route1, 
+            "stop_name1": R1[m].stop_name,
+            "route2": R1[m].route2, 
+            "stop_name2": stations_transfer,
+            "route3": R2[n].name_route, 
+            "timetrip":(R1[m].timetrip + R2[n].time_route + extra_time)
+            }
+          );
+
+      };
+
+    }
+  }
+  return define_dotransbordo;
+}
+function dosTransbordos2 (station_depart_id, station_arrive_id) {
+  //console.time("dosTransbordos");
+  var conect_route=rutas_conexas (station_depart_id, station_arrive_id)
+  if (!conect_route) {
+    return false;
+  };
+
+  var define_dotransbordo=[]; 
+
+  for (var i = 0, longitud_i=conect_route.length; i < longitud_i; i++) {
+    var range_transfer=serviceVerify(conect_route[i].range);
+    var longitud_j = conect_route[i].secuencia.length;
+
+    for (var j = 0; j < longitud_j; j++) {
+      var longitud_k = conect_route[i].secuencia[j].stops.length;
+      for (var k = 0; k < longitud_k; k++) {
+        var R1, R2;
+        var extra_time = 0;
+        var stations_transfer;
+        var longitud_l = dataGets.transfer.length;
+        for (var l = 0; l < longitud_l; l++) {
+          if (conect_route[i].route_id == dataGets.transfer[l].route_id) {
+            var last_peatonal = false;
+            if (dataGets.transfer[l].stop_id!==station_depart_id && 
+                dataGets.transfer[l].stop_id!==station_arrive_id) {
+
+              if (range_transfer[0]) {
+                  if (range_transfer[2]==conect_route[i].secuencia[j][0]) {
+
+                    for (var q = conect_route[i].secuencia[j].stops.length - 1; q >= 0; q--) {
+                      if (conect_route[i].secuencia[j].stops[q].stop_id==dataGets.transfer[l].pedestrian_stop) {
+                        R1 = unTransbordo(station_depart_id, dataGets.transfer[l].stop_id);
+                        R2 = defineRoute(conect_route[i].secuencia[j].stops[q].stop_id, station_arrive_id);
+                        extra_time = 5;
+                        stations_transfer = {"from_stop": getStation(dataGets.transfer[l].stop_id),
+                                             "unto_stop": getStation(dataGets.transfer[l].pedestrian_stop)};
+
+                        if (conect_route[i].secuencia[j].stops[q].stop_id == station_arrive_id) {
+                          var last_peatonal = true;
+          
+                        }
+                      };
+                    }
+                  }
+              }
+            };
+            break;
+          };
         };
+        if (!R1 || !R2) {
+          R1 = unTransbordo(station_depart_id, conect_route[i].secuencia[j].stops[k].stop_id);
+          R2 = defineRoute(conect_route[i].secuencia[j].stops[k].stop_id, station_arrive_id);
+          extra_time = 0;
+        };
+
+        if (!R1 || !R2) {
+          continue;
+        };
+
+        var longitud_m = R1.length;
+        var longitud_n = R2.length;
+        for (var m = 0; m < longitud_m; m++) {
+          for (var n = 0; n < longitud_n; n++) {
+            if (last_peatonal) {
+              R2[n].name_route = "";
+              R2[n].time_route = 0;
+            }else{         
+              stations_transfer = {"from_stop": getStation(conect_route[i].secuencia[j].stops[k].stop_id),
+                               "from_stop_id":conect_route[i].secuencia[j].stops[k].stop_id,
+                               "unto_stop": getStation(conect_route[i].secuencia[j].stops[k].stop_id),
+                               "unto_stop_id":conect_route[i].secuencia[j].stops[k].stop_id
+                             };
+              if (conect_route[i].secuencia[j].stops[0].stop_id == station_arrive_id) {
+                var last_peatonal = true;
+                //console.log("Ultimo transbordo peatonal");
+              }
+              else {
+                var last_peatonal = false;
+              };     
+              var triptime = (R1[m].triptime + R2[n].time_route + extra_time);
+              if (R1[m].stop_name.unto_stop_id!==station_arrive_id) {
+                define_dotransbordo.push({"route1": R1[m].route1, "stop_name1": R1[m].stop_name,
+                                        "route2": R1[m].route2, "stop_name2": stations_transfer,
+                                        "route3": R2[n].name_route, "timetrip": 
+                                        (R1[m].timetrip + R2[n].time_route + extra_time)
+                                      }
+                                    );
+
+              };
+            }
+            
+          };
+        };
+        break;
       };
     };
   };
+  
 
   if (define_dotransbordo.length==0) {
     //console.timeEnd("dosTransbordos");
@@ -1354,15 +1456,29 @@ function runProgram () {
   };
   console.timeEnd("runProgram");
 }
+function onDeviceReady() {
+  
 
+  document.addEventListener("backbutton", function (e) {
+    e.preventDefault();
+    if (!enable_change_page) {
+      //alert("bloqueado");
+      e.preventDefault();
+    };
+            
+   }, false );
+
+  navigator.geolocation.getCurrentPosition(load_geo, onError);
+  
+  
+}
 function setup() {
     // wait for PhoneGap to load
 
     if (navigator.userAgent.match(/OS/i) || navigator.userAgent.match(/Android/i)) {
-
+      
       document.addEventListener("deviceready", onDeviceReady, false);
     }else{
-      
       $( document ).ready(function() {
         
         onDeviceReady();
@@ -1457,10 +1573,10 @@ function showPosition(position2) {
   position.longitude=position2.coords.longitude;
   
 }
-getLocation();
+
 
      
-setup();
+
 
 function AndroidVersion_lower() {
   var bool=false;  
@@ -1484,4 +1600,7 @@ $('#planifica').off('pagebeforechange').on('pagebeforechange',function(event, ui
     
      
   });
+
+setup();
+getLocation();
   //document.getElementById("block_page").style.display ="block";
