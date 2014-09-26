@@ -11,6 +11,7 @@ var transshipment_route=[];
 var no_routes=false;
 var select_station_incorrect=false;
 var position={};
+var url_data='http://199.89.55.130/prueba/';
 
 var listado_estaciones_ref="";
 var listado_rutas_ref="";
@@ -23,7 +24,7 @@ var listado_rutas_ref="";
 
 
 window.enable_change_page=false;
-localStorage.clear();
+//localStorage.clear();
 function change_page(url){
     enable_change_page=false;
     $("#block_page").show(1,function  () {
@@ -55,13 +56,12 @@ function loadFileUpdate () {          //From server
   var data_server=false;
   connectionStatus = navigator.onLine;
   if (connectionStatus) {
-    $.getJSON( "datajson/update.json", function( data, status ) { //Must change current url to server url
+    $.getJSON( url_data+"/uploads/update.json", function( data, status ) { //Must change current url to server url
       dataGets.update = data;
       if (status=='success') {
         if (!localStorage.getItem("update")) {
           localStorage.setItem("update", JSON.stringify(dataGets.update));
         }
-        
         loadDataServer();
       }
     });
@@ -70,7 +70,9 @@ function loadFileUpdate () {          //From server
     $.getJSON( "datajson/update.json", function( data, status ) {   // *** NO CHANGE path*** ---/
       dataGets.update = data;
       if (status=='success') {
-        localStorage.setItem("update", JSON.stringify(dataGets.update));
+        if (!localStorage.getItem("update")) {
+          localStorage.setItem("update", JSON.stringify(dataGets.update));
+        }
         loadDataServer();
       }
     });
@@ -156,39 +158,36 @@ function load_cf_stops(){
 }
 function loadDataServer(){            //From server ---/
   var first_data = (!localStorage.getItem("routes") || !localStorage.getItem("stops") || !localStorage.getItem("transfer"));
-  connectionStatus = navigator.onLine;
+  var connectionStatus = navigator.onLine;
   if ((connectionStatus && updateAvailable()) || (connectionStatus && first_data)) {
-    $.getJSON( "datajson/stationsTM.json", function( data, status ) { //Must change current url to server url
+    document.getElementById("block_page").style.display = "block";
+    $.getJSON( url_data+"/uploads/stationsTM.json", function( data, status ) { //Must change current url to server url
       dataGets.stops = data;
-    load_cf_stops();
+      load_cf_stops();
       if (status=='success') {
         localStorage.setItem("stops", JSON.stringify(dataGets.stops));
-      };
+      }
     });
-    $.getJSON( "datajson/routesTM.json", function( data, status ) { //Must change current url to server url
+    $.getJSON( url_data+"/uploads/routesTM.json", function( data, status ) { //Must change current url to server url
       dataGets.routes = data;
-    load_cf_routes();
+      load_cf_routes();
       if (status=='success') {
         localStorage.setItem("routes", JSON.stringify(dataGets.routes));
-      };
+      }
     });
-    /*$.getJSON( "datajson/serviceTM.json", function( data, status ) {  //Must change current url to server url
-      dataGets.service = data;
-      if (status=='success') {
-        localStorage.setItem("service", JSON.stringify(dataGets.service));
-      };
-    });*/
-    $.getJSON( "datajson/transferTM.json", function( data, status ) {  //Must change current url to server url
+   
+    $.getJSON( url_data+"/uploads/transferTM.json", function( data, status ) {  //Must change current url to server url
       dataGets.transfer = data;
       if (status=='success') {
         localStorage.setItem("transfer", JSON.stringify(dataGets.transfer));
-      };
+      }
     });
+    document.getElementById("block_page").style.display = "none";
     customAlert("Data server are loaded");
   }
   else {
     loadingDataFromLS();
-  };
+  }
 
 }
 
@@ -209,7 +208,7 @@ function loadingDataFromLS () {           //Datas are loaded from local storage 
   }
   else {
     customAlert("No hay datos cargados.\nNecesita internet.");
-  };
+  }
 }
 
 function updateAvailable () {
@@ -223,7 +222,13 @@ function updateAvailable () {
   var server_end_date = formatDate(dataGets.update.end_date);
   var local_start_date = formatDate(local_file_update.start_date);
   var local_end_date = formatDate(local_file_update.end_date);
-
+  if (localStorage.update==JSON.stringify(dataGets.update)) {
+    return false;
+  }else{
+    localStorage.setItem("update", JSON.stringify(dataGets.update));
+    return true;
+    
+  }
   if (localStorage.update==JSON.stringify(dataGets.update)) {
     return false;
   }
@@ -237,8 +242,8 @@ function updateAvailable () {
     }
     else {
       update_available = false;
-    };   
-  };
+    }
+  }
   console.log(update_available);
   return update_available;
 }
@@ -1603,4 +1608,5 @@ $('#planifica').off('pagebeforechange').on('pagebeforechange',function(event, ui
 
 setup();
 getLocation();
+
   //document.getElementById("block_page").style.display ="block";

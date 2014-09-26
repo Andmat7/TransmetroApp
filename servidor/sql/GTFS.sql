@@ -1,6 +1,8 @@
 -- SET @root_path = '/var/www/servidor3/';
 -- Reemplazar 
 -- /var/www/vhosts/localhost.localdomain/httpdocs/prueba/ 
+
+--
 -- con el path del servidor
 USE GTFS2;
 SELECT concat('DROP TABLE IF EXISTS ', table_name, ';')
@@ -120,53 +122,53 @@ CREATE TABLE stops(
         only_pedestrian INT(1)
 
     );
-LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\agency.txt'  INTO TABLE agency
+LOAD DATA LOCAL INFILE '/var/www/vhosts/localhost.localdomain/httpdocs/prueba/uploads/GTFS_txt/agency.txt'  INTO TABLE agency
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
     (agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone);
 
-LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\calendar.txt' INTO TABLE calendar
+LOAD DATA LOCAL INFILE '/var/www/vhosts/localhost.localdomain/httpdocs/prueba/uploads/GTFS_txt/calendar.txt' INTO TABLE calendar
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
     (service_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date);
 
-LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\routes.txt' INTO TABLE routes
+LOAD DATA LOCAL INFILE '/var/www/vhosts/localhost.localdomain/httpdocs/prueba/uploads/GTFS_txt/routes.txt' INTO TABLE routes
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
     (route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color);
 
-LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\shapes.txt' INTO TABLE shapes
+LOAD DATA LOCAL INFILE '/var/www/vhosts/localhost.localdomain/httpdocs/prueba/uploads/GTFS_txt/shapes.txt' INTO TABLE shapes
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
     (shape_id,shape_pt_lat,shape_pt_lon,shape_pt_sequence);
 
-LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\stop_times.txt' INTO TABLE stop_times
+LOAD DATA LOCAL INFILE '/var/www/vhosts/localhost.localdomain/httpdocs/prueba/uploads/GTFS_txt/stop_times.txt' INTO TABLE stop_times
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
     (trip_id,arrival_time,departure_time,stop_id,stop_sequence);
 
-LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\stops.txt' INTO TABLE stops
+LOAD DATA LOCAL INFILE '/var/www/vhosts/localhost.localdomain/httpdocs/prueba/uploads/GTFS_txt/stops.txt' INTO TABLE stops
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
     (stop_id,stop_code,stop_name,stop_lat,stop_lon,stop_url,location_type,parent_station,wheelchair_boarding);
 
-LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\trips.txt' INTO TABLE trips
+LOAD DATA LOCAL INFILE '/var/www/vhosts/localhost.localdomain/httpdocs/prueba/uploads/GTFS_txt/trips.txt' INTO TABLE trips
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
     (route_id,service_id,trip_id,trip_headsign,shape_id);
-LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\transfer.txt' INTO TABLE transfer
+LOAD DATA LOCAL INFILE '/var/www/vhosts/localhost.localdomain/httpdocs/prueba/uploads/GTFS_txt/transfer.txt' INTO TABLE transfer
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES
     (route_id,stop_id,stop_sequence,pedestrian_stop,only_pedestrian);
-LOAD DATA LOCAL INFILE 'C:\\xampp\\htdocs\\transmetro\\servidor\\uploads\\GTFS_txt\\feed_info.txt' INTO TABLE  feed_info
+LOAD DATA LOCAL INFILE '/var/www/vhosts/localhost.localdomain/httpdocs/prueba/uploads/GTFS_txt/feed_info.txt' INTO TABLE  feed_info
     FIELDS TERMINATED BY ','
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES

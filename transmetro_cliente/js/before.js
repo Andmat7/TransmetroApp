@@ -13,8 +13,8 @@ var load_scripts=function(){
     }
 };
 $(function() {
-   // FastClick.attach(document.body);
-    
+   // FastClick.attach(document.body); 
 });
-
-addScript( 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC5Fg9nz4EE0Qbt2J0X0JCSlPziC09NYk8&sensor=false&callback=listo');
+if (navigator.onLine) {
+ addScript( 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC5Fg9nz4EE0Qbt2J0X0JCSlPziC09NYk8&sensor=false&callback=listo');
+}

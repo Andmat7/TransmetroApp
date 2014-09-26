@@ -20,8 +20,10 @@ class Upload extends CI_Controller {
         
 
         $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = '*';
+        $config['allowed_types'] = 'zip';
         $config['max_size'] = '200000';
+        $config['file_name'] = 'GTFS.zip';
+        $config['overwrite'] = TRUE;
         
 
         $this->load->library('upload', $config);
@@ -92,7 +94,7 @@ class Upload extends CI_Controller {
         // echo $command;
         // exit;
 
-        // $output = shell_exec($command);
+        $output = shell_exec($command);
         // echo $output;
         // exit;
         $tiempo_fin = $this->microtime_float();
