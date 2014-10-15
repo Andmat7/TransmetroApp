@@ -1,6 +1,7 @@
 
 render("planifica",{});
 
+
 $("#planifica").trigger('create');
 
 

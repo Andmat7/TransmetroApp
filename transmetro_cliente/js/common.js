@@ -1042,7 +1042,7 @@ function unTransbordo (station_depart_id, station_arrive_id) {
     return define_untransbordo;
   };
 function encontrar_mas_cerca (array_stops,pos_lat,pos_long) {
-  //console.log(array_stops);
+  
     var rango=0.007;
     //var rango=0.1;
     var rango_long=0.007;
@@ -1057,28 +1057,22 @@ function encontrar_mas_cerca (array_stops,pos_lat,pos_long) {
     
     cf=crossfilter(porlat.top(Infinity));
     var porlong = cf.dimension(function(p) { return p.stop_lon*100; });
-    //console.log(pos_long);
-    //console.log([pos_long-rango_long, pos_long+rango_long]);
+    
     porlong.filter([(pos_long-rango_long)*100, (pos_long+rango_long)*100]);
 
     return porlong.top(Infinity);
     
 }
 function mascerca (array_stops, pos_lat,pos_long) {
-  //console.log('array');
-  //console.log(array_stops);
+  
   var  array_ordenados=[];
   var menor=100;
   var station_near={};
   for (var i = array_stops.length - 1; i >= 0; i--) {
 
-
-    //console.log(array_stops[i]);
-    
-
     sqr=Math.sqrt(Math.pow((array_stops[i].stop_lon-pos_long),2)+Math.pow(array_stops[i].stop_lat-pos_lat,2));
-
-    array_ordenados[sqr]=array_stops[i];
+    array_stops[i].sqr=sqr;
+    array_ordenados.push(array_stops[i]);
     if(sqr<menor){
       menor=sqr;
       station_near=array_stops[i];
@@ -1086,6 +1080,7 @@ function mascerca (array_stops, pos_lat,pos_long) {
 
     
   }
+   array_ordenados = _.sortBy( array_ordenados, 'sqr' );
 
   array_ordenados.sort();
 
@@ -1575,7 +1570,18 @@ function error_geo () {
 }
 function showPosition(position2) {
   position.latitude=position2.coords.latitude;
+
   position.longitude=position2.coords.longitude;
+  var lugares2_p=encontrar_mas_cerca(dataGets.stops,position.latitude, position.longitude);
+  var lugares3_q=mascerca(lugares2_p ,position.latitude, position.longitude);
+  if (lugares3_q.length!=0) {
+
+    window.planifica.departure=lugares3_q[0].stop_name;
+    $("#buscar_origen_input").val(window.planifica.departure);
+    stopid_departure=lugares3_q[0].stop_id;  
+  };
+
+  
   
 }
 
