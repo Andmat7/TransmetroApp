@@ -1611,6 +1611,24 @@ $('#planifica').off('pagebeforechange').on('pagebeforechange',function(event, ui
     
      
   });
+function checkConnection() {
+  if (navigator.connection== undefined) {
+    return navigator.onLine;
+    
+  };
+    var networkState = navigator.connection.type;
+
+    if (networkState == Connection.NONE)
+    {
+        return false;
+    }else{
+      return true;
+    }
+
+
+}
+
+
 
 setup();
 getLocation();
