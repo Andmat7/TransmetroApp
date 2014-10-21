@@ -132,9 +132,6 @@ function dibujar_posiciones (latitud, longitud) {
       marcadores_buscar_origen.push(marker);
       
       go_to_function(marker,lugares[key]);
-      if (cont_estaciones_cercanas===0) {
-        debugger;
-      };
       
 
     $("#ul_mas_cercanos").append('<li class=" ui-li-static ui-body-inherit ui-panel-page-container-a" stopid="'+lugares[key].stop_id+'">'+lugares[key].stop_name+'</li>');
