@@ -29,6 +29,7 @@
     <preference name="phonegap-version"           value="3.3.0" />          <!-- all: current version of PhoneGap -->
     <preference name="orientation"                value="portrait" />        <!-- all: default means both landscape and portrait are enabled -->
     >
+
     <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
     <preference name="prerendered-icon"           value="true" />           <!-- ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen -->
     <preference name="ios-statusbarstyle"         value="black-opaque" />   <!-- ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar -->
@@ -80,7 +81,7 @@
     <gap:splash gap:platform="ios" height="1024" src="images/splash/large.png" width="768" />
     <gap:splash gap:platform="ios" height="1136" src="images/splash/large5.png" width="640" />
     <gap:splash gap:platform="ios" height="768" src="images/splash.png" width="1024" />
- 
+    <gap:plugin name="org.apache.cordova.network-information" version="0.2.12" />
     <access origin="*"/> 
     
 </widget>
