@@ -1,4 +1,5 @@
 
+
 var time_inicio=new Date().getTime();
 
 
@@ -1611,6 +1612,7 @@ $('#planifica').off('pagebeforechange').on('pagebeforechange',function(event, ui
     
      
   });
+
 function checkConnection() {
   
   if (navigator.connection== undefined) {
@@ -1622,18 +1624,20 @@ function checkConnection() {
     var networkState = navigator.connection.type;
     
     var states = {};      
+    
     if (networkState == Connection.NONE)
-    {
-     
+    {  
         return false;
+  
 
     }else{
-     
+  
       return true;
     }
 
 
 }
+
 
 
 
